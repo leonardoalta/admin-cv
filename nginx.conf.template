@@ -1,0 +1,14 @@
+# nginx.conf.template
+server {
+  listen       ${PORT:=80} default_server;
+  listen       [::]:${PORT:=80} default_server;
+
+  # Ruta a los ficheros estáticos
+  root   /usr/share/nginx/html;
+  index  index.html;
+
+  # SPA fallback: angular-routing -> index.html
+  location / {
+    try_files $uri $uri/ /index.html;
+  }
+}

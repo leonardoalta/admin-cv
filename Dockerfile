@@ -1,25 +1,32 @@
-# Stage 1: Build de Angular en Node
+# Dockerfile
+
+# Stage 1: Build the Angular application
 FROM node:18-alpine AS build
 WORKDIR /app
 
-# Copia dependencias
+# Install dependencies
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 
-# Copia código fuente
+# Copy configuration and source
 COPY angular.json tsconfig*.json ./
 COPY src ./src
 
-# Genera la build de producción
+# Build for production
 RUN npm run build -- --configuration production
 
-# Stage 2: Servir con NGINX
+# Stage 2: Serve with NGINX using dynamic port binding
 FROM nginx:stable-alpine
-# Copia la build compilada
+
+# Copy the build output to NGINX html directory
 COPY --from=build /app/dist/admin-cv /usr/share/nginx/html
 
-# Expon el puerto 80
+# Copy the NGINX configuration template
+COPY nginx.conf.template /etc/nginx/conf.d/default.conf.template
+
+# Expose port 80 (or the $PORT provided by hosting)
 EXPOSE 80
 
-# Comando por defecto
+# Start NGINX in the foreground
 CMD ["nginx", "-g", "daemon off;"]
+
