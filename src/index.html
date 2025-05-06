@@ -5,9 +5,38 @@
   <title>AdminCv</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- Estilos del fondo -->
+  <style>
+    /* Fondo degradado diagonal suave */
+    body {
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #4a90e2 0%, #9013fe 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: Arial, sans-serif;
+      color: white;
+    }
+
+    /* Contenedor de la app para centrarla y darle algo de padding */
+    app-root {
+      width: 100%;
+      max-width: 1200px;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(8px);
+    }
+  </style>
 </head>
 <body>
   <app-root></app-root>
 </body>
 </html>
+
