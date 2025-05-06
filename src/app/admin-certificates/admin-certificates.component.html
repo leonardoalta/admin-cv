@@ -1,0 +1,264 @@
+<div style="display:flex; gap:2rem; align-items:flex-start; font-family:Arial, sans-serif; color:#2c3e50;">
+
+  <!-- Agregar Certificado -->
+  <div style="flex:0 0 45%;">
+
+    <h2 style="
+      font-size:1.5rem;
+      margin-bottom:1.2rem;
+      border-bottom:2px solid #4a90e2;
+      padding-bottom:0.4rem;
+    ">
+      Agregar Certificado
+    </h2>
+
+    <form style="display:flex; flex-direction:column; gap:1.5rem;">
+
+      <!-- Título del Certificado -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="title" style="font-weight:bold;">Título del Certificado</label>
+        <input
+          id="title"
+          type="text"
+          name="title"
+          placeholder="Ej. Certificado en Angular"
+          [(ngModel)]="newCertificate.title"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Año -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="year" style="font-weight:bold;">Año de obtención</label>
+        <input
+          id="year"
+          type="text"
+          name="year"
+          placeholder="yyyy"
+          [(ngModel)]="newCertificate.year"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Descripción -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="description" style="font-weight:bold;">Descripción</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="Detalles del certificado"
+          [(ngModel)]="newCertificate.description"
+          rows="4"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+            resize:vertical;
+          "
+        ></textarea>
+      </div>
+
+      <!-- Botón alineado a la derecha -->
+      <div style="text-align:right; margin-top:1rem;">
+        <button
+          type="submit"
+          (click)="addCertificate()"
+          style="
+            padding:0.75rem 1.5rem;
+            background:#4a90e2;
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            font-size:1rem;
+            cursor:pointer;
+            transition:background 0.2s;
+          "
+          onmouseover="this.style.background='#357ab8'"
+          onmouseout="this.style.background='#4a90e2'"
+        >
+          Agregar Certificado
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Certificados Registrados -->
+  <div style="flex:1;">
+    <h2 style="
+      font-size:1.4rem;
+      margin-bottom:1rem;
+      border-bottom:2px solid #4a90e2;
+      padding-bottom:0.3rem;
+    ">
+      Certificados Registrados
+    </h2>
+
+    <ng-container *ngFor="let certificate of certificatesList">
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          background:transparent;
+          border:2px solid #000;
+          padding:0.8rem 1rem;
+          border-radius:8px;
+          margin-bottom:0.8rem;
+        "
+      >
+        <div style="font-size:0.95rem; line-height:1.4; overflow-wrap:break-word;">
+          <strong>{{ certificate.title }}</strong><br />
+          {{ certificate.year }} - {{ certificate.description ? (certificate.description | slice:0:50) + (certificate.description.length > 50 ? '...' : '') : '' }}
+        </div>
+        <div>
+          <button
+            (click)="editCertificate(certificate)"
+            style="
+              background:transparent;
+              border:none;
+              color:#4a90e2;
+              font-size:1rem;
+              cursor:pointer;
+              margin-right:0.5rem;
+            "
+          >
+            ✎
+          </button>
+          <button
+            (click)="deleteCertificate(certificate.id || '')"
+            style="
+              background:transparent;
+              border:none;
+              color:#e14c4c;
+              font-size:1.2rem;
+              cursor:pointer;
+            "
+          >
+            ✕
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Formulario de edición (modal) -->
+<div *ngIf="editingCertificate" style="
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  background:rgba(0,0,0,0.5);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:1000;
+">
+  <div style="
+    background:#fff;
+    padding:2rem;
+    border-radius:8px;
+    width:90%;
+    max-width:500px;
+  ">
+    <h3 style="margin-bottom:1.5rem;">Editar Certificado</h3>
+    
+    <div style="display:flex; flex-direction:column; gap:1rem;">
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label style="font-weight:bold;">Título</label>
+        <input
+          type="text"
+          [(ngModel)]="editingCertificate.title"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:0.95rem;
+          "
+        />
+      </div>
+      
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label style="font-weight:bold;">Año</label>
+        <input
+          type="text"
+          [(ngModel)]="editingCertificate.year"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:0.95rem;
+          "
+        />
+      </div>
+      
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label style="font-weight:bold;">Descripción</label>
+        <textarea
+          [(ngModel)]="editingCertificate.description"
+          rows="4"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            font-size:0.95rem;
+            resize:vertical;
+          "
+        ></textarea>
+      </div>
+      
+      <div style="display:flex; justify-content:flex-end; gap:1rem; margin-top:1rem;">
+        <button
+          (click)="cancelEdit()"
+          style="
+            padding:0.5rem 1rem;
+            background:#ccc;
+            color:#333;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+          "
+        >
+          Cancelar
+        </button>
+        <button
+          (click)="updateCertificate()"
+          style="
+            padding:0.5rem 1rem;
+            background:#4a90e2;
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            cursor:pointer;
+          "
+        >
+          Guardar Cambios
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

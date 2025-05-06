@@ -1,0 +1,152 @@
+<header style="background:#f5f5f5; padding:2rem; text-align:center; font-family:Arial, sans-serif;">
+  <div style="max-width:780px; margin:0 auto; display:flex; flex-direction:column; align-items:center; gap:1rem;">
+
+    <!-- FOTO -->
+    <div style="position:relative;">
+      <img
+        [src]="header.photoUrl"
+        [alt]="header.name"
+        style="width:120px; height:120px; border-radius:50%; object-fit:cover; border:3px solid #4a90e2;"
+      />
+      <button
+        type="button"
+        (click)="startEdit('photoUrl')"
+        style="position:absolute; bottom:4px; right:4px; background:#fff; border:none; border-radius:50%; cursor:pointer;"
+      >✎</button>
+    </div>
+
+    <!-- NOMBRE -->
+    <ng-container *ngIf="editingKey !== 'name'; else editName">
+      <h1 style="margin:0; font-size:2rem;">
+        {{ header.name }}
+        <button
+          type="button"
+          (click)="startEdit('name')"
+          style="background:none; border:none; font-size:1rem; cursor:pointer; margin-left:0.5rem;"
+        >✎</button>
+      </h1>
+    </ng-container>
+    <ng-template #editName>
+      <input
+        name="editName"
+        [(ngModel)]="tmpValue"
+        style="font-size:1.8rem; padding:0.3rem; width:80%;"
+      />
+      <button type="button" (click)="save()">✔</button>
+      <button type="button" (click)="cancel()">✕</button>
+    </ng-template>
+
+    <!-- OBJETIVO -->
+    <ng-container *ngIf="editingKey !== 'goalLife'; else editGoal">
+      <p style="margin:0; color:#4a90e2; font-size:1.1rem;">
+        {{ header.goalLife }}
+        <button
+          type="button"
+          (click)="startEdit('goalLife')"
+          style="background:none; border:none; font-size:1rem; cursor:pointer; margin-left:0.5rem;"
+        >✎</button>
+      </p>
+    </ng-container>
+    <ng-template #editGoal>
+      <input
+        name="editGoal"
+        [(ngModel)]="tmpValue"
+        style="font-size:1rem; padding:0.25rem; width:80%;"
+      />
+      <button type="button" (click)="save()">✔</button>
+      <button type="button" (click)="cancel()">✕</button>
+    </ng-template>
+
+    <!-- CONTACTO: email y teléfono -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; font-size:0.95rem; color:#333;">
+      <!-- EMAIL -->
+      <ng-container *ngIf="editingKey !== 'email'; else editEmail">
+        <span>
+          📧 {{ header.email }}
+          <button
+            type="button"
+            (click)="startEdit('email')"
+            style="background:none; border:none; cursor:pointer; margin-left:0.25rem;"
+          >✎</button>
+        </span>
+      </ng-container>
+      <ng-template #editEmail>
+        <input
+          name="editEmail"
+          [(ngModel)]="tmpValue"
+          style="padding:0.25rem;"
+        />
+        <button type="button" (click)="save()">✔</button>
+        <button type="button" (click)="cancel()">✕</button>
+      </ng-template>
+
+      <!-- TELÉFONO -->
+      <ng-container *ngIf="editingKey !== 'phoneNumber'; else editPhone">
+        <span>
+          📞 {{ header.phoneNumber }}
+          <button
+            type="button"
+            (click)="startEdit('phoneNumber')"
+            style="background:none; border:none; cursor:pointer; margin-left:0.25rem;"
+          >✎</button>
+        </span>
+      </ng-container>
+      <ng-template #editPhone>
+        <input
+          name="editPhone"
+          [(ngModel)]="tmpValue"
+          style="padding:0.25rem;"
+        />
+        <button type="button" (click)="save()">✔</button>
+        <button type="button" (click)="cancel()">✕</button>
+      </ng-template>
+    </div>
+
+    <!-- UBICACIÓN Y RED SOCIAL -->
+    <div style="display:flex; gap:1rem; flex-wrap:wrap; justify-content:center; font-size:0.9rem; color:#666;">
+      <!-- UBICACIÓN -->
+      <ng-container *ngIf="editingKey !== 'location'; else editLoc">
+        <span>
+          📍 {{ header.location }}
+          <button
+            type="button"
+            (click)="startEdit('location')"
+            style="background:none; border:none; cursor:pointer; margin-left:0.25rem;"
+          >✎</button>
+        </span>
+      </ng-container>
+      <ng-template #editLoc>
+        <input
+          name="editLoc"
+          [(ngModel)]="tmpValue"
+          style="padding:0.25rem;"
+        />
+        <button type="button" (click)="save()">✔</button>
+        <button type="button" (click)="cancel()">✕</button>
+      </ng-template>
+
+      <!-- RED SOCIAL -->
+      <ng-container *ngIf="editingKey !== 'socialNetwork'; else editSoc">
+        <span>
+          🔗 {{ header.socialNetwork }}
+          <button
+            type="button"
+            (click)="startEdit('socialNetwork')"
+            style="background:none; border:none; cursor:pointer; margin-left:0.25rem;"
+          >✎</button>
+        </span>
+      </ng-container>
+      <ng-template #editSoc>
+        <input
+          name="editSoc"
+          [(ngModel)]="tmpValue"
+          style="padding:0.25rem;"
+        />
+        <button type="button" (click)="save()">✔</button>
+        <button type="button" (click)="cancel()">✕</button>
+      </ng-template>
+    </div>
+
+  </div>
+</header>
+

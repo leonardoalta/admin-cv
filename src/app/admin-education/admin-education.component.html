@@ -1,0 +1,100 @@
+<div style="display:flex; gap:2rem; align-items:flex-start; font-family:Arial, sans-serif; color:#2c3e50;">
+
+  <!-- Formulario Agregar Educación -->
+  <div style="flex:0 0 45%;">
+    <h2 style="font-size:1.5rem;margin-bottom:1.2rem;border-bottom:2px solid #4a90e2;padding-bottom:0.4rem;">
+      Agregar Educación
+    </h2>
+
+    <form style="display:flex;flex-direction:column;gap:1.5rem;">
+      <!-- Fechas -->
+      <div style="display:flex;gap:1rem;">
+        <div style="flex:1;display:flex;flex-direction:column;gap:0.25rem;">
+          <label style="font-weight:bold;">Fecha inicio</label>
+          <input name="startDate" [(ngModel)]="myEducation.startDate" placeholder="mm/yyyy"
+                 style="width:100%;padding:0.75rem;border:1px solid #ccc;border-radius:6px;background:#f9f9f9;font-size:0.95rem;outline:none;"/>
+        </div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:0.25rem;">
+          <label style="font-weight:bold;">Fecha fin</label>
+          <input name="endDate" [(ngModel)]="myEducation.endDate" placeholder="mm/yyyy"
+                 style="width:100%;padding:0.75rem;border:1px solid #ccc;border-radius:6px;background:#f9f9f9;font-size:0.95rem;outline:none;"/>
+        </div>
+      </div>
+
+      <!-- Institución -->
+      <div style="display:flex;flex-direction:column;gap:0.25rem;">
+        <label style="font-weight:bold;">Institución</label>
+        <input name="institution" [(ngModel)]="myEducation.institution" placeholder="Nombre de la institución"
+               style="width:100%;padding:0.75rem;border:1px solid #ccc;border-radius:6px;background:#f9f9f9;font-size:0.95rem;outline:none;"/>
+      </div>
+
+      <!-- Título / Grado -->
+      <div style="display:flex;flex-direction:column;gap:0.25rem;">
+        <label style="font-weight:bold;">Título / Grado</label>
+        <input name="degree" [(ngModel)]="myEducation.degree" placeholder="Ej. Técnico en Producción de Alimentos"
+               style="width:100%;padding:0.75rem;border:1px solid #ccc;border-radius:6px;background:#f9f9f9;font-size:0.95rem;outline:none;"/>
+      </div>
+
+      <!-- Botón -->
+      <div style="text-align:right;margin-top:1rem;">
+        <button type="button" (click)="addEducation()"
+                style="padding:0.75rem 1.5rem;background:#4a90e2;color:#fff;border:none;border-radius:6px;font-size:1rem;cursor:pointer;transition:background 0.2s;"
+                onmouseover="this.style.background='#357ab8'"
+                onmouseout="this.style.background='#4a90e2'">
+          Agregar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista de Educación -->
+  <div style="flex:1;">
+    <h2 style="font-size:1.4rem;margin-bottom:1rem;border-bottom:2px solid #4a90e2;padding-bottom:0.3rem;">
+      Estudios Registrados
+    </h2>
+
+    <ng-container *ngFor="let edu of educationList">
+      <div style="display:flex;justify-content:space-between;align-items:center;background:transparent;border:2px solid #000;padding:0.8rem 1rem;border-radius:8px;margin-bottom:0.8rem;">
+        <div style="font-size:0.95rem;line-height:1.4;overflow-wrap:break-word;">
+          <strong>{{ edu.institution }}</strong><br/>
+          {{ edu.degree }} ({{ edu.startDate }} – {{ edu.endDate || 'Actual' }})
+        </div>
+        <button (click)="deleteEducation(edu.id)"
+                style="background:transparent;border:none;color:#e14c4c;font-size:1.2rem;cursor:pointer;">
+          ✕
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Modal de edición -->
+<div *ngIf="editingEducation" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;justify-content:center;align-items:center;z-index:1000;">
+  <div style="background:#fff;padding:2rem;border-radius:8px;width:90%;max-width:500px;">
+    <h3 style="margin-bottom:1.5rem;">Editar Educación</h3>
+
+    <div style="display:flex;flex-direction:column;gap:1rem;">
+      <!-- Campos del modal -->
+      <input name="editInstitution" [(ngModel)]="editingEducation.institution" placeholder="Institución"
+             style="padding:0.75rem;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;"/>
+      <input name="editDegree" [(ngModel)]="editingEducation.degree" placeholder="Título / Grado"
+             style="padding:0.75rem;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;"/>
+      <input name="editStart" [(ngModel)]="editingEducation.startDate" placeholder="Fecha inicio"
+             style="padding:0.75rem;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;"/>
+      <input name="editEnd" [(ngModel)]="editingEducation.endDate" placeholder="Fecha fin"
+             style="padding:0.75rem;border:1px solid #ccc;border-radius:6px;font-size:0.95rem;"/>
+      
+      <div style="display:flex;justify-content:flex-end;gap:1rem;margin-top:1rem;">
+        <button (click)="cancelEdit()"
+                style="padding:0.5rem 1rem;background:#ccc;color:#333;border:none;border-radius:6px;cursor:pointer;">
+          Cancelar
+        </button>
+        <button (click)="updateEducation()"
+                style="padding:0.5rem 1rem;background:#4a90e2;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+          Guardar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,65 @@
+<div style="display:flex;gap:2rem;align-items:flex-start;font-family:Arial,sans-serif;color:#2c3e50;">
+
+  <!-- Formulario -->
+  <div style="flex:0 0 45%;">
+    <h2 style="font-size:1.5rem;margin-bottom:1.2rem;border-bottom:2px solid #4a90e2;padding-bottom:0.4rem;">
+      Agregar Interés
+    </h2>
+
+    <form style="display:flex;flex-direction:column;gap:1.5rem;">
+      <div style="display:flex;flex-direction:column;gap:0.25rem;">
+        <label style="font-weight:bold;">Nombre del interés</label>
+        <input name="name" [(ngModel)]="newInterest.name" placeholder="Cocina"
+               style="width:100%;padding:0.75rem;border:1px solid #ccc;border-radius:6px;background:#f9f9f9;font-size:0.95rem;"/>
+      </div>
+
+      <div style="text-align:right;">
+        <button type="button" (click)="addInterest()"
+                style="padding:0.75rem 1.5rem;background:#4a90e2;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+          Agregar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Lista -->
+  <div style="flex:1;">
+    <h2 style="font-size:1.4rem;margin-bottom:1rem;border-bottom:2px solid #4a90e2;padding-bottom:0.3rem;">
+      Intereses Registrados
+    </h2>
+
+    <ng-container *ngFor="let i of interestsList">
+      <div style="display:flex;justify-content:space-between;align-items:center;border:2px solid #000;padding:0.8rem 1rem;border-radius:8px;margin-bottom:0.8rem;">
+        <div><strong>{{ i.name }}</strong></div>
+        <div>
+          <button (click)="editInterest(i)"
+                  style="background:transparent;border:none;color:#4a90e2;font-size:1rem;margin-right:0.5rem;cursor:pointer;">
+            ✎
+          </button>
+          <button (click)="deleteInterest(i.id)"
+                  style="background:transparent;border:none;color:#e14c4c;font-size:1.2rem;cursor:pointer;">
+            ✕
+          </button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<!-- Modal edición -->
+<div *ngIf="editingInterest" style="position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;justify-content:center;align-items:center;">
+  <div style="background:#fff;padding:2rem;border-radius:8px;width:90%;max-width:400px;">
+    <h3>Editar Interés</h3>
+    <input [(ngModel)]="editingInterest.name" name="editName" placeholder="Nombre"
+           style="width:100%;padding:0.75rem;margin:0.5rem 0;border:1px solid #ccc;border-radius:6px;"/>
+    <div style="display:flex;justify-content:flex-end;gap:1rem;">
+      <button (click)="cancelEdit()" style="padding:0.5rem 1rem;background:#ccc;border:none;border-radius:6px;cursor:pointer;">
+        Cancelar
+      </button>
+      <button (click)="updateInterest()" style="padding:0.5rem 1rem;background:#4a90e2;color:#fff;border:none;border-radius:6px;cursor:pointer;">
+        Guardar
+      </button>
+    </div>
+  </div>
+</div>
+

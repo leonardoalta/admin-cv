@@ -1,0 +1,211 @@
+<div style="display:flex; gap:2rem; align-items:flex-start; font-family:Arial, sans-serif; color:#2c3e50;">
+
+  <!-- Agregar Experiencia: sección más ancha y inputs redondeados -->
+  <div style="flex:0 0 45%;">
+
+    <h2 style="
+      font-size:1.5rem;
+      margin-bottom:1.2rem;
+      border-bottom:2px solid #4a90e2;
+      padding-bottom:0.4rem;
+    ">
+      Agregar Experiencia
+    </h2>
+
+    <form style="display:flex; flex-direction:column; gap:1.5rem;">
+
+      <!-- Fechas lado a lado -->
+      <div style="display:flex; gap:1rem;">
+        <div style="flex:1; display:flex; flex-direction:column; gap:0.25rem;">
+          <label for="startDate" style="font-weight:bold;">Fecha inicio</label>
+          <input
+            id="startDate"
+            type="text"
+            name="startDate"
+            placeholder="mm/yyyy"
+            [(ngModel)]="myWorkExperience.startDate"
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:1px solid #ccc;
+              border-radius:6px;
+              background:#f9f9f9;
+              font-size:0.95rem;
+              outline:none;
+            "
+          />
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; gap:0.25rem;">
+          <label for="endDate" style="font-weight:bold;">Fecha fin</label>
+          <input
+            id="endDate"
+            type="text"
+            name="endDate"
+            placeholder="mm/yyyy"
+            [(ngModel)]="myWorkExperience.endDate"
+            style="
+              width:100%;
+              padding:0.75rem;
+              border:1px solid #ccc;
+              border-radius:6px;
+              background:#f9f9f9;
+              font-size:0.95rem;
+              outline:none;
+            "
+          />
+        </div>
+      </div>
+
+      <!-- Ubicación -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="location" style="font-weight:bold;">Ubicación</label>
+        <input
+          id="location"
+          type="text"
+          name="location"
+          placeholder="Ciudad, País"
+          [(ngModel)]="myWorkExperience.location"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Puesto -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="position" style="font-weight:bold;">Puesto</label>
+        <input
+          id="position"
+          type="text"
+          name="position"
+          placeholder="Ej. Desarrollador Frontend"
+          [(ngModel)]="myWorkExperience.position"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Empresa -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="company" style="font-weight:bold;">Empresa</label>
+        <input
+          id="company"
+          type="text"
+          name="company"
+          placeholder="Nombre de la empresa"
+          [(ngModel)]="myWorkExperience.company"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Logros -->
+      <div style="display:flex; flex-direction:column; gap:0.25rem;">
+        <label for="accomplishments" style="font-weight:bold;">Logros</label>
+        <input
+          id="accomplishments"
+          type="text"
+          name="accomplishments"
+          placeholder="Breve descripción"
+          [(ngModel)]="myWorkExperience.accomplishments"
+          style="
+            width:100%;
+            padding:0.75rem;
+            border:1px solid #ccc;
+            border-radius:6px;
+            background:#f9f9f9;
+            font-size:0.95rem;
+            outline:none;
+          "
+        />
+      </div>
+
+      <!-- Botón alineado a la derecha -->
+      <div style="text-align:right; margin-top:1rem;">
+        <button
+          type="submit"
+          (click)="AgregarJob()"
+          style="
+            padding:0.75rem 1.5rem;
+            background:#4a90e2;
+            color:#fff;
+            border:none;
+            border-radius:6px;
+            font-size:1rem;
+            cursor:pointer;
+            transition:background 0.2s;
+          "
+          onmouseover="this.style.background='#357ab8'"
+          onmouseout="this.style.background='#4a90e2'"
+        >
+          {{ btntxt }}
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Experiencias Registradas: sin cambios -->
+  <div style="flex:1;">
+    <h2 style="
+      font-size:1.4rem;
+      margin-bottom:1rem;
+      border-bottom:2px solid #4a90e2;
+      padding-bottom:0.3rem;
+    ">
+      Experiencias Registradas
+    </h2>
+
+    <ng-container *ngFor="let job of workExperience">
+      <div
+        style="
+          display:flex;
+          justify-content:space-between;
+          align-items:center;
+          background:transparent;
+          border:2px solid #000;
+          padding:0.8rem 1rem;
+          border-radius:8px;
+          margin-bottom:0.8rem;
+        "
+      >
+        <div style="font-size:0.95rem; line-height:1.4; overflow-wrap:break-word;">
+          <strong>{{ job.company }}</strong><br />
+          {{ job.position }}
+        </div>
+        <button
+          (click)="deleteJob(job.id)"
+          style="
+            background:transparent;
+            border:none;
+            color:#e14c4c;
+            font-size:1.2rem;
+            cursor:pointer;
+          "
+        >
+          ✕
+        </button>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
